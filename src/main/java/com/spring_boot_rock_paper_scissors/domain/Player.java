@@ -6,6 +6,11 @@ public interface Player {
 
     Move getMove();
 
+    void setPoints(int points);
+
+    int getPoints();
+
+    void increasePoints();
 
 
 }
