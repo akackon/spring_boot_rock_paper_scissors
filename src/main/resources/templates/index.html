@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rock Paper Scissors</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <button onclick="play('ROCK')">Rock</button>
+    <button onclick="play('PAPER')">Paper</button>
+    <button onclick="play('SCISSORS')">Scissors</button>
+    <button onclick="autoPlay()">AI vs AI</button>
+    <button onclick="newGame()">New Game</button>
+
+    <div id="result"></div>
+
+    <script>
+        function play(move) {
+            $.ajax({
+                url: '/game/play',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(move),
+                success: function(data) {
+                    $('#result').text('You played ' + data.playerMove + '. Computer played ' + data.computerMove + '. ' + data.result + '. Score: ' + data.scoreBoard.playerScore + ' - ' + data.scoreBoard.computerScore);
+                }
+            });
+        }
+
+        function autoPlay() {
+            $.post('/game/autoPlay', function(data) {
+                $('#result').text('AI 1 played ' + data.playerMove + '. AI 2 played ' + data.computerMove + '. ' + data.result + '. Score: ' + data.scoreBoard.playerScore + ' - ' + data.scoreBoard.computerScore);
+            });
+        }
+
+        function newGame() {
+            $.post('/game/newGame', function() {
+                $('#result').text('New game started. Score reset.');
+            });
+        }
+    </script>
+</body>
+</html>

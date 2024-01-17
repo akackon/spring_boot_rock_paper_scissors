@@ -1,23 +1,49 @@
 package com.spring_boot_rock_paper_scissors.domain;
 
 public class Game {
-    private int roundNumber;
-    private Result result;
-
-
-    public Result playGame(Player player1, Player player2) {
-
-
-        return result;
-    }
-
-    public void awardPoint(Player player1, Player player2, Result result) {
-        if (result == Result.P1_WINS) {
-            player1.increasePoints();
-        } else if (result == Result.P2_WINS) {
-            player2.increasePoints();
+        private Move playerMove;
+        private Move computerMove;
+        private Result result;
+        private ScoreBoard scoreBoard;
+    
+        // getters and setters
+        public Move getPlayerMove() {
+            return playerMove;
         }
+
+        public void setPlayerMove(Move playerMove) {
+            this.playerMove = playerMove;
+        }
+
+        public Move getComputerMove() {
+            return computerMove;
+        }
+
+        public void setComputerMove(Move computerMove) {
+            this.computerMove = computerMove;
+        }
+
+        public Result getResult() {
+            return result;
+        }
+
+        public void setResult(Result result) {
+            this.result = result;
+        }
+
+        public ScoreBoard getScoreBoard() {
+            return scoreBoard;
+        }
+
+        public void setScoreBoard(ScoreBoard scoreBoard) {
+            this.scoreBoard = scoreBoard;
+        }
+
+        // constructor
+        public Game(Move playerMove, Move computerMove, Result result, ScoreBoard scoreBoard) {
+            this.playerMove = playerMove;
+            this.computerMove = computerMove;
+            this.result = result;
+            this.scoreBoard = scoreBoard;
+        }    
     }
-
-
-}
