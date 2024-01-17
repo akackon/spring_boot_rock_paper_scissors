@@ -1,42 +1,105 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Rock Paper Scissors</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
-    <button onclick="play('ROCK')">Rock</button>
-    <button onclick="play('PAPER')">Paper</button>
-    <button onclick="play('SCISSORS')">Scissors</button>
-    <button onclick="autoPlay()">AI vs AI</button>
-    <button onclick="newGame()">New Game</button>
+    <style>
+      body {
+        background-image: url("https://example.com/background.jpg");
+        background-size: cover;
+      }
+      .center-screen {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      .score-card {
+        width: 18rem;
+        margin: 1rem;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-screen">
+      <div class="card text-white bg-primary score-card">
+        <div class="card-body">
+          <h5 class="card-title">Player Score</h5>
+          <p class="card-text" id="playerScore">0</p>
+        </div>
+      </div>
+      <div class="card text-white bg-danger score-card">
+        <div class="card-body">
+          <h5 class="card-title">Computer Score</h5>
+          <p class="card-text" id="computerScore">0</p>
+        </div>
+      </div>
 
-    <div id="result"></div>
+      <div>
+        <button class="btn btn-light" onclick="play('ROCK')">Rock</button>
+        <button class="btn btn-light" onclick="play('PAPER')">Paper</button>
+        <button class="btn btn-light" onclick="play('SCISSORS')">
+          Scissors
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-secondary" onclick="autoPlay()">AI vs AI</button>
+        <button class="btn btn-success" onclick="newGame()">New Game</button>
+      </div>
+
+      <div id="result" class="mt-3"></div>
+    </div>
 
     <script>
-        function play(move) {
-            $.ajax({
-                url: '/game/play',
-                type: 'post',
-                contentType: 'application/json',
-                data: JSON.stringify(move),
-                success: function(data) {
-                    $('#result').text('You played ' + data.playerMove + '. Computer played ' + data.computerMove + '. ' + data.result + '. Score: ' + data.scoreBoard.playerScore + ' - ' + data.scoreBoard.computerScore);
-                }
-            });
-        }
+      function play(move) {
+        $.ajax({
+          url: "/game/play",
+          type: "post",
+          contentType: "application/json",
+          data: JSON.stringify(move),
+          success: function (data) {
+            $("#playerScore").text(data.scoreBoard.playerScore);
+            $("#computerScore").text(data.scoreBoard.computerScore);
+            $("#result").text(
+              "You played " +
+                data.playerMove +
+                ". Computer played " +
+                data.computerMove +
+                ". " +
+                data.result
+            );
+          },
+        });
+      }
 
-        function autoPlay() {
-            $.post('/game/autoPlay', function(data) {
-                $('#result').text('AI 1 played ' + data.playerMove + '. AI 2 played ' + data.computerMove + '. ' + data.result + '. Score: ' + data.scoreBoard.playerScore + ' - ' + data.scoreBoard.computerScore);
-            });
-        }
+      function autoPlay() {
+        $.post("/game/autoPlay", function (data) {
+          $("#playerScore").text(data.scoreBoard.playerScore);
+          $("#computerScore").text(data.scoreBoard.computerScore);
+          $("#result").text(
+            "AI 1 played " +
+              data.playerMove +
+              ". AI 2 played " +
+              data.computerMove +
+              ". " +
+              data.result
+          );
+        });
+      }
 
-        function newGame() {
-            $.post('/game/newGame', function() {
-                $('#result').text('New game started. Score reset.');
-            });
-        }
+      function newGame() {
+        $.post("/game/newGame", function () {
+          $("#playerScore").text("0");
+          $("#computerScore").text("0");
+          $("#result").text("New game started. Score reset.");
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
