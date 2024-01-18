@@ -31,3 +31,10 @@ You can run the unit tests by using the following command:
 ```bash
 mvn test
 ```
+
+## Built With
+
+- Spring Boot - The web framework used
+- Maven - Dependency Management
+- JUnit - Used for testing
+- Mockito - Used for mocking in tests.
