@@ -38,3 +38,7 @@ mvn test
 - Maven - Dependency Management
 - JUnit - Used for testing
 - Mockito - Used for mocking in tests.
+
+## Author
+
+- Adrian Ackon
